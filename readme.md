@@ -6,4 +6,11 @@
 #  **Разработка**
 ### Установка зависимостей
 
-pip install -r requirements.txt
+`pip install -r requirements.txt`
+
+### Запуск проекта
+
+Требуется находиться в директории с файлом "project_1_main.py"
+
+`python project_1_main.py`
+ 
