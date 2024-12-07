@@ -1,3 +1,4 @@
+import pandas as pd
 import yfinance as yf
 
 
@@ -17,6 +18,13 @@ def calculate_and_display_average_price(data, ticker):
     avg_close = round(data['Close'].mean(), 4)
     print(f'Средняя цена закрытия акций {ticker}: {avg_close}')
     print()
+    results = pd.DataFrame({
+        'Тикер': [ticker],
+        'Средняя цена закрытия': [avg_close]
+    })
+
+    return results
+
 
 def check_price_difference(data, threshold):
     """Уведомление о сильных колебаниях, указать порог"""
@@ -31,3 +39,20 @@ def check_price_difference(data, threshold):
         print(f"Уведомление: Разница {difference} превышает порог {threshold}.")
     else:
         print(f"Разница {difference} не превышает порог {threshold}.")
+
+    results = pd.DataFrame({
+        'Максимальная цена закрытия': [max_close],
+        'Минимальная цена закрытия': [min_close],
+        'Разница': [difference],
+        'Порог': [threshold],
+        'Превышает порог': [difference > threshold]
+    })
+    return results
+
+
+def export_data_to_csv(data, filename):
+    """Запись данных в файл"""
+    with pd.ExcelWriter(f'{filename}.xlsx') as writer:
+        for i, df in enumerate(data):
+            df.to_excel(writer, sheet_name=f'Sheet{i + 1}', index=False)
+    data[0].to_csv(f'csv_{filename}.csv', index=False)
