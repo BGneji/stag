@@ -5,6 +5,8 @@ import yfinance as yf
 def fetch_stock_data(ticker, period='1mo'):
     stock = yf.Ticker(ticker)
     data = stock.history(period=period)
+    print(data.columns.tolist())
+    print(data)
     return data
 
 
@@ -56,3 +58,23 @@ def export_data_to_csv(data, filename):
         for i, df in enumerate(data):
             df.to_excel(writer, sheet_name=f'Sheet{i + 1}', index=False)
     data[0].to_csv(f'csv_{filename}.csv', index=False)
+
+
+def upeman_downeman(data, column, window_size=5):
+    """Дополнительные технические индикаторы, например, RSI"""
+    delta = data[column].diff()
+    gain = (delta.where(delta > 0, 0)).rolling(window=window_size).mean()
+    loss = (-delta.where(delta < 0, 0)).rolling(window=window_size).mean()
+    rs = gain / loss
+    rsi = 100 - (100 / (1 + rs))
+    return rsi
+
+
+
+
+
+
+
+
+
+
