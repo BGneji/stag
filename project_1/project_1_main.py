@@ -12,11 +12,12 @@ def main():
         "с начала года, макс.")
 
     ticker = input("Введите тикер акции (например, «AAPL» для Apple Inc): ")
-    period = input("Введите период для данных (например, '1mo' для одного месяца): ")
+    period_start = input("Введите дату начало периода в формате «2024-12-12»: ")
+    period_end = input("Введите дату конца периода в формате «2024-12-12»: ")
     threshold = int(input("Введите значение порога колебания: "))
 
     """Получить данные"""
-    stock_data = dd.fetch_stock_data(ticker, period)
+    stock_data = dd.fetch_stock_data(ticker, period_start, period_end)
 
     """данные за определенный период """
     stock_data_file = stock_data
@@ -34,8 +35,8 @@ def main():
     close_column = 'Close'
     high_column = 'High'
     """Добавления столбцов RSI_Close и RSI_High в DF"""
-    stock_data['RSI_Close'] = dd.UpemaN_DownemaN(stock_data, close_column)
-    stock_data['RSI_High'] = dd.UpemaN_DownemaN(stock_data, high_column)
+    stock_data['RSI_Close'] = dd.upeman_downeman(stock_data, close_column)
+    stock_data['RSI_High'] = dd.upeman_downeman(stock_data, high_column)
     # print(stock_data)
 
     """Запись данных в файл"""
@@ -53,7 +54,7 @@ def main():
         print('Файлы не созданы')
 
     """Создание графика"""
-    dplt.create_and_save_plot(stock_data, ticker, period)
+    dplt.create_and_save_plot(stock_data, ticker, period_start, period_end)
 
 
 if __name__ == "__main__":

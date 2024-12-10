@@ -2,11 +2,9 @@ import pandas as pd
 import yfinance as yf
 
 
-def fetch_stock_data(ticker, period='1mo'):
+def fetch_stock_data(ticker, start, end):
     stock = yf.Ticker(ticker)
-    data = stock.history(period=period)
-    print(data.columns.tolist())
-    print(data)
+    data = stock.history(start=start, end=end)
     return data
 
 
