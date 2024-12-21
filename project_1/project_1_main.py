@@ -22,6 +22,8 @@ def main():
     """данные за определенный период """
     stock_data_file = stock_data
 
+    std_close = dd.standard_deviation(stock_data)
+
     """Вывод средней цены за период"""
     stock_data_avg = dd.calculate_and_display_average_price(stock_data, ticker)
 
@@ -54,7 +56,7 @@ def main():
         print('Файлы не созданы')
 
     """Создание графика"""
-    dplt.create_and_save_plot(stock_data, ticker, period_start, period_end)
+    dplt.create_and_save_plot(stock_data, ticker, period_start, period_end, std_close)
 
 
 if __name__ == "__main__":

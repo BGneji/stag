@@ -68,10 +68,11 @@ def upeman_downeman(data, column, window_size=5):
     return rsi
 
 
+def standard_deviation(data):
+    """Стандартного отклонения цены закрытия"""
+    std_dev = data['Close'].std()
 
-
-
-
+    return std_dev
 
 
 
